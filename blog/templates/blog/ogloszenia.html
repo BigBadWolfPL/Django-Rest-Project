@@ -10,7 +10,7 @@
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content|truncatechars:200 }}</p>
-            {{ post.image }}
+            <img src="{{post.image.url}}" alt="Smiley face" width="250" height="250">
           </div>
       </article>
     {% endfor %}
