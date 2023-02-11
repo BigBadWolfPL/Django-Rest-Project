@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+   {% if wyszukanie %}
+   <a href="{% url 'blog-home' %}"><img src="/../media/scherlock.jpg" width="75%"></a>
+      <h1>Wyniki dla: <b> {{ wyszukanie }}</b></h1>
+     {% for wynik in wyniki %}
+         <ul>
+            <a class="navbar-brand mr-auto" href="{% url 'post-detail' wynik.id %}">{{ wynik.title }}</a>
+         </ul>
+     {% endfor %}
+
+   {% else %}
+      <h2>Nie podano zdanej wartości do wyszukania</h2>
+   {% endif %}
+
+{% endblock content %}
+

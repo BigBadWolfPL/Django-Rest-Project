@@ -1,0 +1,117 @@
+
+body {
+  background: url("/../media/bac.jpg") no-repeat center center fixed;
+  margin-top: 5rem;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  overflow-x: hidden; 
+  overflow-y: scroll;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+  }
+  
+  ul {
+    margin: 0;
+  }
+  
+  .bg-steel {
+    background-color: #5f788a;
+    opacity: 89%;
+
+  }
+  
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  
+  .content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    opacity: 90%;
+  }
+
+  .content-section2 {
+    background: #f9fafd;
+    padding: 10px 20px;
+    border-style: inherit;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    opacity: 55%;
+    position: fixed;
+  }
+  p.ex2 {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+  }
+  
+  .article-title {
+    color: #444444;
+  }
+  
+  a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+  }
+  
+  .article-content {
+    white-space: pre-line;
+  }
+  
+  .article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+  }
+  
+  .article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+  }
+  
+  .article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .article-svg {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+  }
+  
+  .account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .account-heading {
+    font-size: 2.5rem;
+}
+  
+.zawodnicy {
+  text-align: center;
+}
+
+.zawodnicy img {
+  width: 100%;
+  height: auto;
+}

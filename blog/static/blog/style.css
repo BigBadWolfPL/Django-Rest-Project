@@ -1,0 +1,70 @@
+
+@media (min-width: 30rem) {
+  :root {
+    font-size: calc(1rem + ((1vw - 0.3rem) * 0.5556));
+    /* Where: * 0.5556 = 100 * font_Size_Difference / viewport_Width_Difference */
+  }
+}
+
+/* Prevent font scaling beyond this breakpoint */
+@media (min-width: 120rem) {
+  :root {
+    font-size: 1.5rem;
+  }
+}
+
+body {
+  font-family:'Courier New', Courier, monospace;
+  margin-top: 1rem;
+  -webkit-text-size-adjust:auto;
+  -moz-text-size-adjust: auto;
+  -moz-text-size-adjust: auto;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  overflow-x: hidden; 
+  overflow-y: scroll;
+  font-size: 0.65rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight:600;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+.wrapper {
+  background: url("/../media/bac.jpg") no-repeat center center fixed;
+  background-size: cover;
+  border-image: repeating-linear-gradient(30deg, #4d9f0c, #9198e5, #4d9f0c 20px) 60;
+}
+
+.img {
+  display: block;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  border-radius: 25px;
+  }
+
+.social {
+  padding: 5%;
+  text-align: left;
+}
+
+.back {
+  position: fixed;
+}
+
+footer {
+  font-size: 0.6rem;
+  width: 100%;
+  background: linear-gradient(to right, rgb(188, 183, 215) 0%, rgb(192, 231, 227) 100%);
+  clear: both;
+}
