@@ -19,13 +19,6 @@ from django.views.generic import (
 from django.contrib.auth.forms import UserCreationForm
 
 
-##################################################################
-
-
-class HomeView(TemplateView):
-    template_name = 'blog/home.html'                       
-
-
 class OgloszeniaListView(ListView):
     model = Post                                                   
     template_name = 'blog/ogloszenia.html'      # (error domyslna nazwa templatu post_list)  <app>/<model>_<viewtype>.html
@@ -33,14 +26,6 @@ class OgloszeniaListView(ListView):
     ordering = ['-date_posted'] 
     paginate_by =10
 
-
-#def home(request):                                           # <----------
-#    context = {
-#        'posts': Post.objects.all().order_by('-date_posted')                         
-#    }
-#    return render(request, 'blog/home.html', context)
-
-##################################################################
 
 
 class UserPostListView(ListView):
@@ -61,7 +46,7 @@ class PostDetailView(DetailView):                             # Zachowane domyś
 
 class PostCreateView(LoginRequiredMixin, CreateView):         # Zachowane domyślne nazwy
     model = Post                                              # Dla Create oczekiwana nazwa obiektu to 'form'
-    fields = ['title', 'content']                             # LoginRequiredMixin nowe posty tylko przez zalogowanych
+    fields = ['title', 'content', 'image']                             # LoginRequiredMixin nowe posty tylko przez zalogowanych
     
     def form_valid(self, form):                               # Your PostCreateView creates instances of Post and you have set fields = ['title','content'] meaning only these fields would show up in the form. 
         form.instance.author = self.request.user              # But you have a field author which is non-nullable and without a default, hence you need to set a value for this field too.
@@ -114,10 +99,6 @@ def search(request):
             'wyniki': wyniki})
 
     return render(request, 'blog/search.html')
-
-
-class CvView(TemplateView):
-    template_name = 'blog/cv.html'
 
 
 
