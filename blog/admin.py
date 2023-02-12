@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Post
+from . import models
 
-# Register your models here.
 
-admin.site.register(Post)
+@admin.register(models.Images)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('title', 'id', 'slug', 'author')
+    prepopulated_fields = {'slug': ('title',), }

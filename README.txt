@@ -1,1 +1,0 @@
-Project in Django framework.
