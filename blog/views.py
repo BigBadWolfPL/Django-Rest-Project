@@ -8,3 +8,5 @@ from blog.models import Images
 class ImagesViewSet(viewsets.ModelViewSet):
     queryset = Images.objects.all()
     serializer_class = ImagesSerializer
+
+
