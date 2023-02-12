@@ -1,0 +1,1 @@
+usunąłem katalog images z głównego katalogo (obok manage.py)

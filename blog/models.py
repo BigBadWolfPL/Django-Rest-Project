@@ -3,9 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-# Create your models here.
-
-
 def user_directory_path(instance, filename):
     return 'images/{0}'.format(filename)
 

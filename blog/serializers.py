@@ -9,11 +9,9 @@ class ImagesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Images
-        fields = ('creator', 'title', 'image')
+        fields = ('author', 'creator', 'title', 'image')
 
 
-
-# WYŚWIETLANE:
-
-# creator = author username
-# author = author id
+ #WYŚWIETLANE:
+ #creator = author username
+ #author = author id
