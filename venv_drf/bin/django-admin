@@ -1,4 +1,4 @@
-#!/home/robert/Dokumenty/Frameworki/Django_pro/Django-Rest-Project/venv_drf/bin/python
+#!/home/robert/Dokumenty/wieksze_projekty/Django-Rest-Project/Django-Rest-Project/venv_drf/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

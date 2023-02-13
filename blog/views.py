@@ -16,3 +16,4 @@ class ImagesViewSet(viewsets.ModelViewSet):
 
         user = self.request.user
         return Images.objects.filter(author=user)
+

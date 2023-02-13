@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/robert/Dokumenty/Frameworki/Django_pro/Django-Rest-Project/venv_drf"
+VIRTUAL_ENV="/home/robert/Dokumenty/wieksze_projekty/Django-Rest-Project/Django-Rest-Project/venv_drf"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

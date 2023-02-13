@@ -1,17 +1,14 @@
 from rest_framework import serializers
-from blog.models import Images
-from django.contrib.auth.models import User
+from blog.models import Images, Profile
+
 
 
 class ImagesSerializer(serializers.ModelSerializer):
 
-    creator = serializers.ReadOnlyField(source='author.username')
+    creator = serializers.ReadOnlyField(source='author.id')
+    member = serializers.ReadOnlyField(source='membership')
 
     class Meta:
         model = Images
-        fields = ('author', 'creator', 'title', 'image')
+        fields = ('author', 'creator','member', 'title', 'image')
 
-
- #WYŚWIETLANE:
- #creator = author username
- #author = author id
