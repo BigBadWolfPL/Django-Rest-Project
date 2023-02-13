@@ -26,6 +26,7 @@ class Images(models.Model):
             img.save(self.image.path)
 
 
+
 class Profile(models.Model):
 
     MEMBERSHIP = (
@@ -38,4 +39,6 @@ class Profile(models.Model):
     membership = models.CharField(max_length=10, choices=MEMBERSHIP, default='BASIC')
 
     def __str__(self):
-        return f'{self.user.username} {self.membership} Profile'
+        return f'{self.user.username} {self.membership}'
+
+
