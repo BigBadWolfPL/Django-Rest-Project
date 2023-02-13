@@ -3,6 +3,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
 
 def user_directory_path(instance, filename):
     return 'images/{0}'.format(filename)
@@ -14,16 +17,25 @@ class Images(models.Model):
     image = models.ImageField(upload_to=user_directory_path)
     created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='author')
+    thumbnail_200 = ImageSpecField(source='image',
+                                  processors=[ResizeToFill(100, 200)],
+                                  format='JPEG',
+                                  options={'quality': 60})
+    thumbnail_400 = ImageSpecField(source='image',
+                                  processors=[ResizeToFill(100, 400)],
+                                  format='JPEG',
+                                  options={'quality': 60})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
-
-        if img.height > 200:
-            output_size = (200, 200)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+#    def save(self, *args, **kwargs):
+#        super().save(*args, **kwargs)
+#
+#        img = Image.open(self.image.path)
+#
+#        if img.height > 200:
+#            output_size = (200, 200)
+#            img.thumbnail(output_size)
+#            img.save(self.image.path)
 
 
 
