@@ -15,8 +15,7 @@ class ImagesViewSet(APIView):
     
     def get(self, request, format=None):
         user = self.request.user
-
-        profile = Images.objects.filter(author=user)[1]
+        membership = user.profile.membership
 
         small_images_links =[str(img.thumbnail_200.url) for img in Images.objects.filter(author=user)]
         medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
@@ -28,6 +27,9 @@ class ImagesViewSet(APIView):
             'user': str(request.user),
             'small_images_links': small_images_links,
             'medium_images_links': medium_images_links,
+            'membership_BASIC': membership == "BASIC",
+            'membership_PREMIUM': membership == "PREMIUM",
+            'membership_ENTERPRISE': membership == "ENTERPRISE",
         }
 
         return Response(content)
@@ -49,14 +51,14 @@ print('\n\n')
 
 #print(Profile.objects.filter(id=1))
 #user_obj = User.objects.filter(id=2).first()
-profile_obj = Profile.objects.all().first()
-print(profile_obj.membership)
-print(profile_obj.user)
+#profile_obj = Profile.objects.all().first()
+#print(profile_obj.membership)
+#print(profile_obj.user)
 #print(user_obj == profile_obj.user)
 #filtered = Images.objects.filter(author=2)
 #print(filtered)
 
-#profile = Images.objects.all()[0]
+#profile = Images.objects.all()
 #print(profile.thumbnail_200.url)    # > /media/CACHE/images/982d5af84cddddfd0fbf70892b4431e4.jpg
 #print(profile.thumbnail_400.url)
 #

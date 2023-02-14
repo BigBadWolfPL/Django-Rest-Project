@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from PIL import Image
-
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
@@ -27,18 +28,6 @@ class Images(models.Model):
                                   options={'quality': 60})
 
 
-#    def save(self, *args, **kwargs):
-#        super().save(*args, **kwargs)
-#
-#        img = Image.open(self.image.path)
-#
-#        if img.height > 200:
-#            output_size = (200, 200)
-#            img.thumbnail(output_size)
-#            img.save(self.image.path)
-
-
-
 class Profile(models.Model):
 
     MEMBERSHIP = (
@@ -54,3 +43,11 @@ class Profile(models.Model):
         return f'{self.user.username} {self.membership}'
 
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
