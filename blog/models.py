@@ -6,18 +6,20 @@ from django.dispatch import receiver
 from PIL import Image
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from django.utils.translation import gettext_lazy as _
 
 
-def user_directory_path(instance, filename):
-    return 'images/{0}'.format(filename)
+#def user_directory_path(instance, filename):
+#    return 'images/{0}'.format(filename=filename)
+
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
 
 
 class Images(models.Model):
 
-    title = models.CharField(max_length=250)
-    image = models.ImageField(upload_to=user_directory_path)
-    created = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='author')
+    image = models.ImageField(_("Image"), upload_to=upload_to)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
     thumbnail_200 = ImageSpecField(source='image',
                                   processors=[ResizeToFill(100, 200)],
                                   format='JPEG',
