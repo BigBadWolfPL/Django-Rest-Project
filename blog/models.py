@@ -14,9 +14,9 @@ def user_directory_path(instance, filename):
 
 class Images(models.Model):
 
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, blank=True, default='')
     image = models.ImageField(upload_to=user_directory_path)
-    created = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='author')
     thumbnail_200 = ImageSpecField(source='image',
                                   processors=[ResizeToFill(100, 200)],
