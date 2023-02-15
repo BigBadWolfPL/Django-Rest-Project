@@ -1,10 +1,12 @@
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
+from rest_framework import routers
 from blog.views import ImagesViewSet
 
 
-urlpatterns = [
-    path('', ImagesViewSet.as_view()),
-]
+#router = routers.DefaultRouter()
+#router.register(r'blog', ImagesViewSet)
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns = [
+    path('', ImagesViewSet.as_view()),   
+]
