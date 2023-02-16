@@ -3,11 +3,9 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from blog.views import ImagesViewSet
-#from blog.urls import router as blog_router
 
 
 urlpatterns = [
-    #path('', include(blog_router.urls)),
     path('', include('blog.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))

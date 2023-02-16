@@ -9,16 +9,13 @@ from imagekit.processors import ResizeToFill
 from django.utils.translation import gettext_lazy as _
 
 
-#def user_directory_path(instance, filename):
-#    return 'images/{0}'.format(filename=filename)
-
-def upload_to(instance, filename):
-    return 'images/{filename}'.format(filename=filename)
+def user_directory_path(instance, filename):
+    return 'images/{0}'.format(filename)
 
 
 class Images(models.Model):
 
-    image = models.ImageField(_("Image"), upload_to=upload_to)
+    image = models.ImageField(_("Image"), upload_to=user_directory_path)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
     thumbnail_200 = ImageSpecField(source='image',
                                   processors=[ResizeToFill(100, 200)],
