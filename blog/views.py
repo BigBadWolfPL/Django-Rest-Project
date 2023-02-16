@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
+from rest_framework import generics
 
 
 class ImagesViewSet(APIView):
@@ -57,3 +58,8 @@ class ImagesViewSet(APIView):
                 content['oryginal_images_links'] = oryginal_images_links
 
         return Response(content)
+
+
+class AddImageViewSet(generics.CreateAPIView):
+    queryset = Images.objects.all()
+    serializer_class = ImagesSerializer

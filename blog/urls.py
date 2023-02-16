@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from blog.views import ImagesViewSet
+from blog.views import ImagesViewSet, AddImageViewSet
 
 
 #router = routers.DefaultRouter()
@@ -8,5 +8,6 @@ from blog.views import ImagesViewSet
 
 
 urlpatterns = [
-    path('', ImagesViewSet.as_view()),   
+    path('', ImagesViewSet.as_view()),
+    path('add/', AddImageViewSet.as_view())   
 ]
