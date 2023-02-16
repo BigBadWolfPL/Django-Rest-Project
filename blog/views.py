@@ -39,5 +39,3 @@ class ImagesViewSet(APIView):
             #'membership_ENTERPRISE': membership == "ENTERPRISE",
         }
         return Response(content)
-small_images_links =[str(img.thumbnail_200.url) for img in Images.objects.all()]
-print(small_images_links)
