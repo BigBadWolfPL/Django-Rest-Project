@@ -25,13 +25,15 @@ class ImagesViewSet(APIView):
 
         if self.request.user.id is None:
             user = f"{self.request.user} --> PLEASE LOGIN // PROSZĘ SIĘ ZALOGOWAĆ ;) <--"
+            oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.all()] # Tylko do podglądu // usunąć >>> należy się zalogować w postman
             small_images_links =[str(img.thumbnail_200.url) for img in Images.objects.all()]  # Tylko do podglądu // usunąć >>> należy się zalogować w postman
             medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.all()] # Tylko do podglądu // usunąć >>> należy się zalogować w postman
             
             content = {
-            'user': str(request.user),
-            'small_images_links': small_images_links,
-            'medium_images_links': medium_images_links,
+            'user': str(request.user), # Tylko do podglądu // usunąć >>> należy się zalogować w postman
+            'small_images_links': small_images_links, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
+            'medium_images_links': medium_images_links, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
+            'oryginal_size': oryginal_size, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
             'membership_None': f"{user}",
             }
         else:
@@ -46,16 +48,19 @@ class ImagesViewSet(APIView):
                 }
             ### PREMIUM MEMBERSHIP ###
             if membership == "PREMIUM":
-                medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)] 
+                medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
+                oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
                 content['medium_images_links'] = medium_images_links
+                content['oryginal_size'] = oryginal_size
             ### ENTERPRISE MEMBERSHIP ###
             if membership == "ENTERPRISE":
-                medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)] 
-                binary_images_links = "link to binary ..."
-                oryginal_images_links = "link to oryginal image ..."
+                medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
+                oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
+                binary_images_links = [str(img.thumbnail_binary.url) for img in Images.objects.filter(author=user)] #"link to binary here ..."
                 content['medium_images_links'] = medium_images_links
+                content['oryginal_size'] = oryginal_size
                 content['binary_images_links'] = binary_images_links
-                content['oryginal_images_links'] = oryginal_images_links
+
 
         return Response(content)
 

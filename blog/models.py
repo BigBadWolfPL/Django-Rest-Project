@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToCover
 from django.utils.translation import gettext_lazy as _
 
 
@@ -17,14 +17,15 @@ class Images(models.Model):
 
     image = models.ImageField(_("Image"), upload_to=user_directory_path)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
+    thumbnail_oryginal = ImageSpecField(source='image',
+                                  options={'quality': 100})
     thumbnail_200 = ImageSpecField(source='image',
-                                  processors=[ResizeToFill(100, 200)],
-                                  format='JPEG',
-                                  options={'quality': 60})
+                                  processors=[ResizeToCover(width=True, height=200)],
+                                  options={'quality': 100})
     thumbnail_400 = ImageSpecField(source='image',
-                                  processors=[ResizeToFill(100, 400)],
-                                  format='JPEG',
-                                  options={'quality': 60})
+                                  processors=[ResizeToCover(width=True, height=400)],
+                                  options={'quality': 100})
+    thumbnail_binary = ImageSpecField(source='image', options={'quality': 100})
 
 
 class Profile(models.Model):
