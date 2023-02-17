@@ -28,6 +28,7 @@ class Images(models.Model):
     thumbnail_binary = ImageSpecField(source='image', options={'quality': 100})
 
 
+
 class Profile(models.Model):
 
     MEMBERSHIP = (
@@ -41,6 +42,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} {self.membership}'
+
+
+class BinaryImage(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    binary_img = models.BinaryField(blank=True)
 
 
 @receiver(post_save, sender=User)

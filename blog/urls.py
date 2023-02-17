@@ -1,13 +1,9 @@
 from django.urls import path, include
 from rest_framework import routers
-from blog.views import ImagesViewSet, AddImageViewSet
-
-
-#router = routers.DefaultRouter()
-#router.register(r'blog', ImagesViewSet)
+from blog.views import ImagesViewSet, BinaryImageView
 
 
 urlpatterns = [
     path('', ImagesViewSet.as_view()),
-    path('add/', AddImageViewSet.as_view())   
+    path('binary/', BinaryImageView.as_view(),)   
 ]

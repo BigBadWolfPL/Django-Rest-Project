@@ -1,5 +1,5 @@
 from blog.serializers import ImagesSerializer
-from blog.models import Images
+from blog.models import Images, BinaryImage
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -8,10 +8,16 @@ from rest_framework import status
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 from rest_framework import generics
 
+from django.conf import settings
+import base64
 
-class ImagesViewSet(APIView):
+from rest_framework.renderers import JSONRenderer
+
+
+class ImagesViewSet(generics.ListAPIView): #lub APIView
     #permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
+    serializer_class = ImagesSerializer
 
     def post(self, request, format=None):
         serializer = ImagesSerializer(data=request.data)
@@ -56,15 +62,29 @@ class ImagesViewSet(APIView):
             if membership == "ENTERPRISE":
                 medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
                 oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
-                binary_images_links = [str(img.thumbnail_binary.url) for img in Images.objects.filter(author=user)] #"link to binary here ..."
+                #binary_images_links = [str(img.thumbnail_binary) for img in Images.objects.filter(author=user)] #"link to binary here ..."
                 content['medium_images_links'] = medium_images_links
                 content['oryginal_size'] = oryginal_size
-                content['binary_images_links'] = binary_images_links
-
+                #content['binary_images_links'] = binary_images_links
 
         return Response(content)
 
 
-class AddImageViewSet(generics.CreateAPIView):
-    queryset = Images.objects.all()
-    serializer_class = ImagesSerializer
+class BinaryImageView(APIView):
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        user = self.request.user
+        membership = user.profile.membership
+        binary_images_links = [str(img.thumbnail_binary) for img in Images.objects.filter(author=user)]
+        image_obj = binary_images_links[-1]
+
+        with open(settings.MEDIA_ROOT +'/'+ image_obj, 'rb') as f:
+            file = f.read()
+            bytes_obj = base64.b64encode(file)
+
+        content = {'binary_data': bytes_obj}
+
+        return Response(content)
+
