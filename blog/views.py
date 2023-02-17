@@ -1,5 +1,5 @@
 from blog.serializers import ImagesSerializer
-from blog.models import Images, BinaryImage
+from blog.models import Images#, BinaryImage
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -14,8 +14,8 @@ import base64
 from rest_framework.renderers import JSONRenderer
 
 
-class ImagesViewSet(generics.ListAPIView): #lub APIView
-    #permission_classes = [IsAuthenticated]
+class ImagesViewSet(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ImagesSerializer
 
@@ -30,18 +30,8 @@ class ImagesViewSet(generics.ListAPIView): #lub APIView
     def get(self, request, format=None):
 
         if self.request.user.id is None:
-            user = f"{self.request.user} --> PLEASE LOGIN // PROSZĘ SIĘ ZALOGOWAĆ ;) <--"
-            oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.all()] # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            small_images_links =[str(img.thumbnail_200.url) for img in Images.objects.all()]  # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.all()] # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            
-            content = {
-            'user': str(request.user), # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            'small_images_links': small_images_links, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            'medium_images_links': medium_images_links, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            'oryginal_size': oryginal_size, # Tylko do podglądu // usunąć >>> należy się zalogować w postman
-            'membership_None': f"{user}",
-            }
+            content = {'PLEASE LOGIN': f"{self.request.user} // PLEASE LOGIN // PROSZĘ SIĘ ZALOGOWAĆ ;) //"}
+
         else:
             ### BASIC MEMBERSHIP ###
             user = self.request.user
@@ -62,10 +52,8 @@ class ImagesViewSet(generics.ListAPIView): #lub APIView
             if membership == "ENTERPRISE":
                 medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
                 oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
-                #binary_images_links = [str(img.thumbnail_binary) for img in Images.objects.filter(author=user)] #"link to binary here ..."
                 content['medium_images_links'] = medium_images_links
                 content['oryginal_size'] = oryginal_size
-                #content['binary_images_links'] = binary_images_links
 
         return Response(content)
 
@@ -77,7 +65,7 @@ class BinaryImageView(APIView):
     def get(self, request, format=None):
         user = self.request.user
         membership = user.profile.membership
-        binary_images_links = [str(img.thumbnail_binary) for img in Images.objects.filter(author=user)]
+        binary_images_links = [str(img.image) for img in Images.objects.filter(author=user)]
         image_obj = binary_images_links[-1]
 
         with open(settings.MEDIA_ROOT +'/'+ image_obj, 'rb') as f:
@@ -85,6 +73,25 @@ class BinaryImageView(APIView):
             bytes_obj = base64.b64encode(file)
 
         content = {'binary_data': bytes_obj}
-
         return Response(content)
+
+
+#    def get(self, request, format=None):
+#        user = self.request.user
+#        membership = user.profile.membership
+#
+#        for image_obj in Images.objects.filter(author=user):
+#            print(f'DANE: {image_obj.image}')
+#
+#            with open(settings.MEDIA_ROOT +'/'+ str(image_obj.image), 'rb') as f:
+#                file = f.read()
+#                bytes_obj = base64.b64encode(file)
+#                created = BinaryImage.objects.create(author=user, binary_img=bytes_obj)
+# 
+#        content = {'binary_data': bytes_obj}
+#
+#        for x in BinaryImage.objects.all():
+#            print(x.author)
+#
+#        return Response(content)
 

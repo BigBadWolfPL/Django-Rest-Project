@@ -25,9 +25,10 @@ class Images(models.Model):
     thumbnail_400 = ImageSpecField(source='image',
                                   processors=[ResizeToCover(width=True, height=400)],
                                   options={'quality': 100})
-    thumbnail_binary = ImageSpecField(source='image', options={'quality': 100})
+    #thumbnail_binary = ImageSpecField(source='image', options={'quality': 100})    # do wywalenia
 
-
+    def __str__(self):
+        return f'{self.author} {self.image}'
 
 class Profile(models.Model):
 
@@ -44,9 +45,9 @@ class Profile(models.Model):
         return f'{self.user.username} {self.membership}'
 
 
-class BinaryImage(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    binary_img = models.BinaryField(blank=True)
+#class BinaryImage(models.Model):                                   # prawdopodobnie do wywalenia
+#    author = models.ForeignKey(User, on_delete=models.CASCADE)     # prawdopodobnie do wywalenia
+#    binary_img = models.BinaryField(blank=True)                    # prawdopodobnie do wywalenia
 
 
 @receiver(post_save, sender=User)
