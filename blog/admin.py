@@ -1,36 +1,41 @@
 from django.contrib import admin
-#from . import models
-
-
-#@admin.register(models.Images)
-#class AuthorAdmin(admin.ModelAdmin):
-#    list_display = ('id', 'author')
-#
-#admin.site.register(models.Profile)
-
-
+from . import models
 from imagekit.admin import AdminThumbnail
 from imagekit import ImageSpec
 from imagekit.processors import ResizeToCover
 from imagekit.cachefiles import ImageCacheFile
 
-from .models import Images, Profile
 
-class AdminThumbnailSpec(ImageSpec):
-    processors = [ResizeToCover(width=100, height=30)]
-    #format = 'JPEG'
+class AdminThumbnailSpec200(ImageSpec):
+    processors = [ResizeToCover(width=100, height=200)]
     options = {'quality': 100 }
 
-def cached_admin_thumb(instance):
-    # `image` is the name of the image field on the model
-    cached = ImageCacheFile(AdminThumbnailSpec(instance.image))
-    # only generates the first time, subsequent calls use cache
+def cached_admin_thumb_200(instance):
+    cached = ImageCacheFile(AdminThumbnailSpec200(instance.image))
     cached.generate()
     return cached
 
-class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'admin_thumbnail')
-    admin_thumbnail = AdminThumbnail(image_field=cached_admin_thumb)
+class AdminThumbnailSpec400(ImageSpec):
+    processors = [ResizeToCover(width=100, height=400)]
+    options = {'quality': 100 }
 
-admin.site.register(Images, PhotoAdmin)
-admin.site.register(Profile)
+def cached_admin_thumb_400(instance):
+    cached = ImageCacheFile(AdminThumbnailSpec400(instance.image))
+    cached.generate()
+    return cached
+
+
+@admin.register(models.Images)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('author', 'image','admin_thumbnail_200', 'admin_thumbnail_400')
+    list_filter = ('author', )
+
+    admin_thumbnail_200 = AdminThumbnail(image_field=cached_admin_thumb_200)
+    admin_thumbnail_400 = AdminThumbnail(image_field=cached_admin_thumb_400)
+
+
+@admin.register(models.Profile)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('user', 'membership')
+    list_filter = ('membership', )
+
