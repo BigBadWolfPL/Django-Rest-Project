@@ -18,7 +18,7 @@ class ImagesViewSet(generics.ListAPIView):
     serializer_class = ImagesSerializer
 
     def post(self, request, format=None):
-        serializer = ImagesSerializer(data=request.data)
+        serializer = ImagesSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
@@ -61,7 +61,7 @@ class BinaryImageView(APIView):
     serializer_class = ImagesSerializer
 
     def post(self, request, format=None):
-        serializer = ImagesSerializer(data=request.data)
+        serializer = ImagesSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
