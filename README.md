@@ -44,7 +44,8 @@ docker-compose exec web python manage.py createsuperuser
 * And Password.
 
 
-#### You are now ready to go (login and enjoy ;)):
+#### You are now ready to go adress:
 ### http://0.0.0.0:8000/
+##### login and enjoy ;)
 
 
