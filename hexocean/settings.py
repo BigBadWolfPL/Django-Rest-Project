@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'rest_framework',
     'imagekit',
+    'rest_framework.authtoken',
 ]
 
 
@@ -49,9 +50,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
-    'rest_framework.parsers.JSONParser',
-    'rest_framework.parsers.FormParser',
-    'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
     ],
 }
 

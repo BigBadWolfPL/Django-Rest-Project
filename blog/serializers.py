@@ -13,5 +13,5 @@ class ImagesSerializer(serializers.ModelSerializer):
 class BinaryImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = BinaryImage
-        fields = ['binary']
+        fields = '__all__'
 

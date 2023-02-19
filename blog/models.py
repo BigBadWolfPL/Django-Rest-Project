@@ -66,5 +66,5 @@ def create_binary_data(sender, instance, created, **kwargs):
         with open(settings.MEDIA_ROOT +'/'+ str(instance.image), 'rb') as f:
             file = f.read()
             bytes_obj = base64.b64encode(file)
-            BinaryImage.objects.create(binary=bytes_obj)
+            BinaryImage.objects.create(binary=bytes_obj) # or maybe .update_or_create() ???
             print(BinaryImage.objects.all().last())
