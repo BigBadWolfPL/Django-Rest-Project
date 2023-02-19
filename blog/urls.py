@@ -4,6 +4,6 @@ from blog.views import ImagesViewSet, BinaryImageView
 
 
 urlpatterns = [
-    path('', ImagesViewSet.as_view()),
-    path('binary/', BinaryImageView.as_view(),)   
+    path(r'', ImagesViewSet.as_view()),
+    path(r'binary/', BinaryImageView.as_view(),)   
 ]

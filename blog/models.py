@@ -7,6 +7,8 @@ from PIL import Image
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToCover
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+import base64
 
 
 def user_directory_path(instance, filename):
@@ -15,6 +17,7 @@ def user_directory_path(instance, filename):
 
 class Images(models.Model):
     image = models.ImageField(_("Image"), upload_to=user_directory_path)
+    time = models.IntegerField(blank=True, default=30) #pole potrzebne do podania czasu ile ma być aktywny token >>> powiązać to z modelem BinaryImage
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
     thumbnail_oryginal = ImageSpecField(source='image',
                                   options={'quality': 100})
@@ -44,6 +47,10 @@ class Profile(models.Model):
         return f'{self.user.username} {self.membership}'
 
 
+class BinaryImage(models.Model):
+    binary = models.BinaryField()
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -52,3 +59,12 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+@receiver(post_save, sender=Images)
+def create_binary_data(sender, instance, created, **kwargs):
+    if created:
+        with open(settings.MEDIA_ROOT +'/'+ str(instance.image), 'rb') as f:
+            file = f.read()
+            bytes_obj = base64.b64encode(file)
+            BinaryImage.objects.create(binary=bytes_obj)
+            print(BinaryImage.objects.all().last())

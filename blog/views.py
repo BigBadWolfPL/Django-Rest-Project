@@ -1,5 +1,5 @@
-from blog.serializers import ImagesSerializer
-from blog.models import Images
+from blog.serializers import ImagesSerializer, BinaryImageSerializer
+from blog.models import Images, BinaryImage
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -50,43 +50,33 @@ class ImagesViewSet(generics.ListAPIView):
             if membership == "ENTERPRISE":
                 medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
                 oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
+                binary_objects = BinaryImage.objects.filter(id=user.id)
+                binary_data_serializer = BinaryImageSerializer(binary_objects, many=True)
+                binary_data = binary_data_serializer.data
+
                 content['medium_images_links'] = medium_images_links
                 content['oryginal_size'] = oryginal_size
+                content['binary_data'] = binary_data
         return Response(content)
 
 
 class BinaryImageView(APIView):
     permission_classes = [IsAuthenticated]
-    renderer_classes = [JSONRenderer]
-    serializer_class = ImagesSerializer
-
-    def post(self, request, format=None):
-        serializer = ImagesSerializer(data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
 
         if self.request.user.id is None:
             content = {'PLEASE LOGIN': f"{self.request.user} // PLEASE LOGIN // PROSZĘ SIĘ ZALOGOWAĆ ;) //"}
-#            image_obj = Images.objects.all().last()                                 # TYLKO DO PODGLĄDU
-#
-#            with open(settings.MEDIA_ROOT +'/'+ str(image_obj.image), 'rb') as f:   # TYLKO DO PODGLĄDU
-#                file = f.read()                                                     # TYLKO DO PODGLĄDU
-#                bytes_obj = base64.b64encode(file)                                  # TYLKO DO PODGLĄDU
-            content = {'binary_data': content}
-
         else:
+            ### BASIC MEMBERSHIP ###
             user = self.request.user
             membership = user.profile.membership
-            image_obj = Images.objects.filter(author=user).last()
-
-            with open(settings.MEDIA_ROOT +'/'+ str(image_obj.image), 'rb') as f:
-                file = f.read()
-                bytes_obj = base64.b64encode(file)
-
-            content = {'binary_data': bytes_obj}
+            content = {
+                'binary': f'Needed ENTERPRISE membership to access this data - Your membership is: {membership}.',
+                }
+            ### ENTERPRISE MEMBERSHIP ###
+            if membership == "ENTERPRISE":
+                binary_objects = BinaryImage.objects.filter(id=user.id)
+                serializer = BinaryImageSerializer(binary_objects, many=True)
+                content = serializer.data
         return Response(content)

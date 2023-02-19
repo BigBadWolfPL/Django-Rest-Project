@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Images
+from blog.models import Images, BinaryImage
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -7,6 +7,11 @@ class ImagesSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Images
-        fields = ['image', 'author']
+        fields = ['image', 'author', 'time']
 
-    
+
+class BinaryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BinaryImage
+        fields = ['binary']
+
