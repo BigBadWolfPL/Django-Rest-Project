@@ -1,9 +1,7 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from PIL import Image
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToCover
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +15,7 @@ def user_directory_path(instance, filename):
 
 class Images(models.Model):
     image = models.ImageField(_("Image"), upload_to=user_directory_path)
-    time = models.IntegerField(blank=True, default=30) #pole potrzebne do podania czasu ile ma być aktywny token >>> powiązać to z modelem BinaryImage
+    time = models.IntegerField(blank=True, help_text = "Token Lifetime in seconds (min= 300 / max=30000, This field is optional >>> default=300)", default=300)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
     thumbnail_oryginal = ImageSpecField(source='image',
                                   options={'quality': 100})
@@ -27,9 +25,8 @@ class Images(models.Model):
     thumbnail_400 = ImageSpecField(source='image',
                                   processors=[ResizeToCover(width=True, height=400)],
                                   options={'quality': 100})
-
     def __str__(self):
-        return f'{self.author} {self.image}'
+        return f'{self.author} {self.image} {self.time}'
 
 
 class Profile(models.Model):
@@ -42,7 +39,6 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     membership = models.CharField(max_length=10, choices=MEMBERSHIP, default='BASIC')
-
     def __str__(self):
         return f'{self.user.username} {self.membership}'
 
@@ -66,5 +62,4 @@ def create_binary_data(sender, instance, created, **kwargs):
         with open(settings.MEDIA_ROOT +'/'+ str(instance.image), 'rb') as f:
             file = f.read()
             bytes_obj = base64.b64encode(file)
-            BinaryImage.objects.create(binary=bytes_obj) # or maybe .update_or_create() ???
-            print(BinaryImage.objects.all().last())
+            BinaryImage.objects.update_or_create(binary=bytes_obj)

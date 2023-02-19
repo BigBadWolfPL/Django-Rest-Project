@@ -13,11 +13,12 @@ import base64
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from blog.authentication import ExpiringTokenAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 import pytz
 import datetime
 
 
-class ImagesViewSet(generics.ListAPIView):
+class ImagesView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = ImagesSerializer
@@ -53,24 +54,33 @@ class ImagesViewSet(generics.ListAPIView):
             if membership == "ENTERPRISE":
                 medium_images_links =[str(img.thumbnail_400.url) for img in Images.objects.filter(author=user)]
                 oryginal_size = [str(img.thumbnail_oryginal.url) for img in Images.objects.filter(author=user)]
-                binary_objects = BinaryImage.objects.filter(id=user.id)
-                binary_data_serializer = BinaryImageSerializer(binary_objects, many=True)
-                binary_data = binary_data_serializer.data
-
                 content['medium_images_links'] = medium_images_links
                 content['oryginal_size'] = oryginal_size
                 content['binary_data_link'] = '/binary/'
         return Response(content)
 
 
-class BinaryImageViewSet(viewsets.ModelViewSet):
+class BinaryImageView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [ExpiringTokenAuthentication]
-    queryset = BinaryImage.objects.all()
-    serializer_class = BinaryImageSerializer
 
-    def get_queryset(self):
-        return BinaryImage.objects.filter(id=self.request.user.pk).all()
+    def get(self, request, format=None):
+        if self.request.user.id is None:
+            content = {'PLEASE CCREATE ACCOUNT': f"{self.request.user}"}
+        else:
+            user = self.request.user
+            membership = user.profile.membership
+
+            if membership != "ENTERPRISE":
+                raise AuthenticationFailed(f'Your membership is {membership}, upgrade to ENTERPRISE to acces this data.')
+
+            binary_objects = BinaryImage.objects.filter(id=user.id)
+            binary_data_serializer = BinaryImageSerializer(binary_objects, many=True)
+            binary_data = binary_data_serializer.data
+            content = {
+                'binary': binary_data,
+                }
+        return Response(content)
 
 
 class CustomAuthTokenLogin(ObtainAuthToken):
@@ -84,7 +94,7 @@ class CustomAuthTokenLogin(ObtainAuthToken):
         utc_now = datetime.datetime.utcnow()
         utc_now = utc_now.replace(tzinfo=pytz.utc)
 
-        result = Token.objects.filter(user = user, created__lt = utc_now - datetime.timedelta(seconds=60)).delete()
+        result = Token.objects.filter(user = user, created__lt = utc_now - datetime.timedelta(seconds=300)).delete()
 
         token, created = Token.objects.get_or_create(user=user)
         return Response({

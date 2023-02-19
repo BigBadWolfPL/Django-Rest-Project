@@ -1,9 +1,10 @@
 from rest_framework.authentication import TokenAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
-from django.conf import settings
+from blog.models import Images
 import pytz
 import datetime
 from rest_framework.authtoken.models import Token
+
 
 class ExpiringTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
@@ -18,9 +19,17 @@ class ExpiringTokenAuthentication(TokenAuthentication):
         utc_now = datetime.datetime.utcnow()
         utc_now = utc_now.replace(tzinfo=pytz.utc)
 
-        if token.created < utc_now - datetime.timedelta(seconds=60): #settings.TOKEN_EXPIRE_TIME: Move time setting to settings.py later
-            raise AuthenticationFailed('Token has expired')
+        # Checking token time-to-live
+        # set by the user when adding a photo.
+        user_post = Images.objects.all().last()
+        user_time = user_post.time
 
-        ## Maybe here add user membership heck???
+        if user_time < 300 or user_time is None:
+            user_time = 300
+        elif user_time > 30000:
+            user_time = 30000
+
+        if token.created < utc_now - datetime.timedelta(seconds=user_time):
+            raise AuthenticationFailed('Token has expired')
 
         return token.user, token
