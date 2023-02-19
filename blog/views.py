@@ -1,6 +1,5 @@
 from blog.serializers import ImagesSerializer, BinaryImageSerializer
 from blog.models import Images, BinaryImage
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -11,9 +10,11 @@ from rest_framework import generics
 from rest_framework import viewsets
 from django.conf import settings
 import base64
-#from rest_framework.renderers import JSONRenderer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from blog.authentication import ExpiringTokenAuthentication
+import pytz
+import datetime
 
 
 class ImagesViewSet(generics.ListAPIView):
@@ -30,10 +31,8 @@ class ImagesViewSet(generics.ListAPIView):
             return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-
         if self.request.user.id is None:
             content = {'PLEASE LOGIN': f"{self.request.user} // PLEASE LOGIN // PROSZĘ SIĘ ZALOGOWAĆ ;) //"}
-
         else:
             ### BASIC MEMBERSHIP ###
             user = self.request.user
@@ -66,7 +65,7 @@ class ImagesViewSet(generics.ListAPIView):
 
 class BinaryImageViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [ExpiringTokenAuthentication]
     queryset = BinaryImage.objects.all()
     serializer_class = BinaryImageSerializer
 
@@ -81,6 +80,12 @@ class CustomAuthTokenLogin(ObtainAuthToken):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+
+        utc_now = datetime.datetime.utcnow()
+        utc_now = utc_now.replace(tzinfo=pytz.utc)
+
+        result = Token.objects.filter(user = user, created__lt = utc_now - datetime.timedelta(seconds=60)).delete()
+
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
