@@ -70,11 +70,27 @@ docker-compose exec web python manage.py createsuperuser
 ##### Login as superuser and upload images
 
 * Create some accounts (admin panel)
-* you can change membership for each user in "ROFILES" (admin panel) default membership = BASIC.
+* you can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
 * upload some images.
 
 #### To see binary data you must generate token
 
-*
+* Visit: http://0.0.0.0:8000/api-token-auth/
+* Send username and password as post request (In postman set: body/raw/JSON):
 
+{
+    "username":
+        "Yourusername",
+    "password":
+        "yourpassword" 
+}
+
+You will get New token.
+
+* Visit: http://0.0.0.0:8000/binary/
+* Send that token as get request (Set: Headers), example:
+
+KEY: Authorization VALUE Token a572848007f96cd97a78f5e8114352f33e18e149
+
+Token expires afetr time set via uploading photo (default=300, max =30000 seconds)
 
