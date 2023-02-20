@@ -74,7 +74,7 @@ docker-compose exec web python manage.py createsuperuser
 * Upload some images.
 * See result on: (http://0.0.0.0:8000/   +   small_image_link), example:
 
-http://localhost:8000//media/CACHE/images/images/exampleimage/exampleimage.jpg
+"http://localhost:8000//media/CACHE/images/images/exampleimage/exampleimage.jpg"
 
 #### To see binary data you must generate token
 
