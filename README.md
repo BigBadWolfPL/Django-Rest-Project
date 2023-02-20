@@ -1,4 +1,4 @@
-## Django-Rest-Project
+# Django-Rest-Project
 
 * [Description](#description)
 * [Technologies](#technologies)
@@ -92,11 +92,11 @@ If You login successfully you will be redirected to the adress: accounts/profile
 * you can now visit http://0.0.0.0:8000/
 
 
-#### To see binary data you must generate expiring token
+## To see binary data you must generate expiring token
 
-##### Visit: http://0.0.0.0:8000/api-token-auth/
+### Visit: http://0.0.0.0:8000/api-token-auth/
 
-###### (IMPORTANT! In postman set: body/raw/JSON)
+#### (IMPORTANT! In postman set: body/raw/JSON)
 * Send username and password as POST request, example:
 
 
@@ -112,9 +112,9 @@ If You login successfully you will be redirected to the adress: accounts/profile
 
 You will recive New Token.
 
-##### Visit: http://0.0.0.0:8000/binary/
+### Visit: http://0.0.0.0:8000/binary/
 
-###### (IMPORTANT! Set: Headers)
+### (IMPORTANT! Set: Headers)
 * Enter KEY: Authorization and VALUE: Token >token_you_received<
 * Send that token as GET request, example:
 
