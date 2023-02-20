@@ -70,6 +70,10 @@ docker-compose exec web python manage.py createsuperuser
 ## LOGIN:
 ### If you using browser go directly to: http://0.0.0.0:8000/
 * Login as a superuser you created
+* Create some accounts (admin panel)
+* You can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
+* Upload some images.
+* See result on: (http://0.0.0.0:8000/   +   small_image_link), or just (CTRL + right mouse button on link in postman)
 
 ### If you use postman go to: http://0.0.0.0:8000/api-auth/login/
 * send GET request to recive token
@@ -83,20 +87,15 @@ docker-compose exec web python manage.py createsuperuser
 
 (KEY: password VALUE: yourpassword)
 * send POST request
+
 If You login successfully you will be redirected to the adress: accounts/profile/ (that does not exist)
 * you cen now wizit http://0.0.0.0:8000/
 
-##### Login as superuser and upload images
 
-* Create some accounts (admin panel)
-* You can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
-* Upload some images.
-* See result on: (http://0.0.0.0:8000/   +   small_image_link), or just (CTRL + right mouse button on link in postman)
-
-
-#### To see binary data you must generate token
+#### To see binary data you must generate expiring token
 
 ##### Visit: http://0.0.0.0:8000/api-token-auth/
+
 ###### (IMPORTANT! In postman set: body/raw/JSON)
 * Send username and password as POST request, example:
 
@@ -111,9 +110,10 @@ If You login successfully you will be redirected to the adress: accounts/profile
 
 
 
-You will get New token.
+You will recive New Token.
 
 ##### Visit: http://0.0.0.0:8000/binary/
+
 ###### (IMPORTANT! Set: Headers)
 * Enter KEY: Authorization and VALUE: Token >token_you_received<
 * Send that token as GET request, example:
