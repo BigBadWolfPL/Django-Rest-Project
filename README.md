@@ -72,7 +72,7 @@ docker-compose exec web python manage.py createsuperuser
 * Create some accounts (admin panel)
 * You can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
 * Upload some images.
-* See result on: (http://0.0.0.0:8000/   +   small_image_link), or just (CTRL + right mouse button on link)
+* See result on: (http://0.0.0.0:8000/   +   small_image_link), or just (CTRL + right mouse button on link in postman)
 
 
 #### To see binary data you must generate token
