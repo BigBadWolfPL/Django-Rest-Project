@@ -96,8 +96,8 @@ You will get New token.
 
 ##### Visit: http://0.0.0.0:8000/binary/
 ###### (Set: Headers)
-* Enter KEY and VALUE
-* Send that token as GET request, example
+* Enter KEY: Authorization and VALUE: Token <YourToken>
+* Send that token as GET request, example:
 
 * KEY: Authorization VALUE: Token dv284f7f96cd92345435fdg4352f33e13432d
 
