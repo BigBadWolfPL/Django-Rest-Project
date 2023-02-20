@@ -79,6 +79,7 @@ docker-compose exec web python manage.py createsuperuser
 * Send username and password as POST request (In postman set: body/raw/JSON), example:
 
 
+
 {
     "username":
         "Yourusername",
@@ -87,13 +88,16 @@ docker-compose exec web python manage.py createsuperuser
 }
 
 
+
 You will get New token.
 
 * Visit: http://0.0.0.0:8000/binary/
 * Send that token as GET request (Set: Headers), example:
+
  
  
 KEY: Authorization VALUE Token dv284f7f96cd92345435fdg4352f33e13432d
+
 
 
 Token expires afetr time set via uploading photo (default=300, max =30000 seconds)
