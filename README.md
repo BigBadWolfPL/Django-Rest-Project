@@ -96,7 +96,7 @@ If You login successfully you will be redirected to the adress: accounts/profile
 
 ### Visit: http://0.0.0.0:8000/api-token-auth/
 
-#### (IMPORTANT! In postman set: body/raw/JSON)
+#### IMPORTANT! In postman set: body/raw/JSON
 * Send username and password as POST request, example:
 
 
@@ -114,8 +114,8 @@ You will recive New Token.
 
 ### Visit: http://0.0.0.0:8000/binary/
 
-### (IMPORTANT! Set: Headers)
-* Enter KEY: Authorization and VALUE: Token >token_you_received<
+### IMPORTANT! In Headers:
+* Create (KEY: Authorization  VALUE: Token >token_you_received<)
 * Send that token as GET request, example:
 
 * KEY: Authorization VALUE: Token dv284f7f96cd92345435fdg4352f33e13432d
