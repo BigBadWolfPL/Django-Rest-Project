@@ -70,8 +70,11 @@ docker-compose exec web python manage.py createsuperuser
 ##### Login as superuser and upload images
 
 * Create some accounts (admin panel)
-* you can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
-* upload some images.
+* You can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
+* Upload some images.
+* See result on: (http://0.0.0.0:8000/   +   small_image_link), example:
+
+http://localhost:8000//media/CACHE/images/images/exampleimage/exampleimage.jpg
 
 #### To see binary data you must generate token
 
