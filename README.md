@@ -89,7 +89,7 @@ docker-compose exec web python manage.py createsuperuser
 * send POST request
 
 If You login successfully you will be redirected to the adress: accounts/profile/ (that does not exist)
-* you cen now wizit http://0.0.0.0:8000/
+* you can now visit http://0.0.0.0:8000/
 
 
 #### To see binary data you must generate expiring token
