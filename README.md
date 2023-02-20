@@ -77,9 +77,9 @@ docker-compose exec web python manage.py createsuperuser
 
 #### To see binary data you must generate token
 
-###### Visit: http://0.0.0.0:8000/api-token-auth/
+##### Visit: http://0.0.0.0:8000/api-token-auth/
 
-* In postman set: body/raw/JSON
+In postman set: body/raw/JSON
 
 
 {
@@ -95,8 +95,8 @@ docker-compose exec web python manage.py createsuperuser
 
 You will get New token.
 
-###### Visit: http://0.0.0.0:8000/binary/
-* (Set: Headers)
+##### Visit: http://0.0.0.0:8000/binary/
+(Set: Headers)
 * KEY: Authorization VALUE: Token dv284f7f96cd92345435fdg4352f33e13432d
 * Send that token as GET request.
 
