@@ -76,7 +76,8 @@ docker-compose exec web python manage.py createsuperuser
 #### To see binary data you must generate token
 
 * Visit: http://0.0.0.0:8000/api-token-auth/
-* Send username and password as post request (In postman set: body/raw/JSON):
+* Send username and password as post request (In postman set: body/raw/JSON), example:
+
 
 {
     "username":
@@ -85,12 +86,13 @@ docker-compose exec web python manage.py createsuperuser
         "yourpassword" 
 }
 
+
 You will get New token.
 
 * Visit: http://0.0.0.0:8000/binary/
 * Send that token as get request (Set: Headers), example:
 
-KEY: Authorization VALUE Token a572848007f96cd97a78f5e8114352f33e18e149
+KEY: Authorization VALUE Token dv284f7f96cd92345435fdg4352f33e13432d
 
 Token expires afetr time set via uploading photo (default=300, max =30000 seconds)
 
