@@ -53,6 +53,9 @@ cd Django-Rest-Project
 ```
 docker-compose up
 ```
+
+Note: If there is a problem with server, just press CTRL + C in terminal and run (docker-compose up) command once again - that should help.
+
 4) With running docker container open second terminal window and paste this command (To create superuser):
 
 ```
