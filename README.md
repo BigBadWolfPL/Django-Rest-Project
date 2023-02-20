@@ -66,6 +66,15 @@ docker-compose exec web python manage.py createsuperuser
 
 #### You are now ready to go adress:
 ### http://0.0.0.0:8000/
-##### login and enjoy ;)
+
+##### Login as superuser and upload images
+
+* Create some accounts (admin panel)
+* you can change membership for each user in "ROFILES" (admin panel) default membership = BASIC.
+* upload some images.
+
+#### To see binary data you must generate token
+
+*
 
 
