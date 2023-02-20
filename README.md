@@ -74,8 +74,10 @@ docker-compose exec web python manage.py createsuperuser
 ### If you use postman go to: http://0.0.0.0:8000/api-auth/login/
 * send GET request to recive token
 * in HEADERS create (KEY: X-CSRFToken VALUE: >TokenYouRecived<
-* in BODY/form-data create 
+* in BODY/form-data create
+
 (KEY: username VALUE: yourusername)
+
 (KEY: password VALUE: yourpassword)
 * send POST request
 If You login successfully you will be redirected to the adress: accounts/profile/ (that does not exist)
