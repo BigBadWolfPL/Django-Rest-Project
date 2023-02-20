@@ -71,7 +71,15 @@ docker-compose exec web python manage.py createsuperuser
 ### If you using browser go directly to: http://0.0.0.0:8000/
 * Login as a superuser you created
 
-### If you use postman go to: http://0.0.0.0:8000/api-auth/login/ (HEADERS: )
+### If you use postman go to: http://0.0.0.0:8000/api-auth/login/
+* send GET request to recive token
+* in HEADERS create (KEY: X-CSRFToken VALUE: >TokenYouRecived<
+* in BODY/form-data create 
+(KEY: username VALUE: yourusername)
+(KEY: password VALUE: yourpassword)
+* send POST request
+If You login successfully you will be redirected to the adress: accounts/profile/ (that does not exist)
+* you cen now wizit http://0.0.0.0:8000/
 
 ##### Login as superuser and upload images
 
