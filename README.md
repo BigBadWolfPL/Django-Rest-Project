@@ -36,7 +36,8 @@ Project is created with:
 
 ## Setup
 
-To run project on Unix or MacOS just copy and run this script in your terminal (in choosen location):
+To run project just copy and run this script in your terminal (in choosen location)
+on (Unix or MacOS):
 
 ```
 git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git &&
