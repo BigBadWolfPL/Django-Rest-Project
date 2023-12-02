@@ -63,7 +63,7 @@ or (Windows):
 git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git &&
 cd Django-Rest-Project &&
 python -m venv env_rest &&
-source env_rest\Scripts\activate &&
+source env_rest/Scripts/activate &&
 pip install -r requirements.txt &&
 python manage.py makemigrations &&
 python manage.py migrate &&
