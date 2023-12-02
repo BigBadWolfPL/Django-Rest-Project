@@ -54,7 +54,7 @@ cd Django-Rest-Project
 python -m venv env_rest
 ```
 
-3) Activate virtual environment by using command (Unix or MacOS):
+4) Activate virtual environment by using command (Unix or MacOS):
 ```
 source env_rest/bin/activate
 ```
@@ -64,18 +64,29 @@ or (Windows):
 source env_rest\Scripts\activate
 ```
 
-Note: If there is a problem with server, just press CTRL + C in terminal and run (docker-compose up) command once again - that should help.
 
-4) With running docker container open second terminal window and paste this command (To create superuser):
+5) Install all packages from requirements.txt:
 
 ```
-docker-compose exec web python manage.py createsuperuser
+pip install -r requirements.txt 
+
+```
+6) Create superuser:
+
+```
+python manage.py createsuperuser
 
 ```
 * Enter your Username,
 * Email (optional), 
 * And Password.
 
+6) Run server:
+
+```
+python manage.py runserver
+
+```
 
 ## LOGIN:
 ### If you using browser go directly to: http://0.0.0.0:8000/
