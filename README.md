@@ -37,6 +37,7 @@ Project is created with:
 ## Setup
 
 To run project just copy and run this script in your terminal (in choosen location)
+
 on (Unix or MacOS):
 
 ```
