@@ -43,15 +43,25 @@ To run project:
 git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git
 
 ```
+
 2) Change location to project folder using command:
 ```
 cd Django-Rest-Project
 ```
 
-3) In location where docker-compose.yml is run command:
-
+3) Create virtual environment using command:
 ```
-docker-compose up
+python -m venv env_rest
+```
+
+3) Activate virtual environment by using command (Unix or MacOS):
+```
+source env_rest/bin/activate
+```
+
+or (Windows):
+```
+source env_rest\Scripts\activate
 ```
 
 Note: If there is a problem with server, just press CTRL + C in terminal and run (docker-compose up) command once again - that should help.
