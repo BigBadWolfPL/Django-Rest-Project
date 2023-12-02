@@ -74,9 +74,11 @@ pip install -r requirements.txt
 6) Create superuser:
 
 ```
-python manage.py createsuperuser
-
+python manage.py makemigrations &&
+python manage.py migrate &&
+python manage.py createsuperuser 
 ```
+
 * Enter your Username,
 * Email (optional), 
 * And Password.
