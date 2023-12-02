@@ -35,9 +35,8 @@ Project is created with:
 
 
 ## Setup
-To run project:
 
-1) Clone this repository
+To run project on Unix or MacOS just copy and run this script in your terminal (in choosen location):
 
 ```
 git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git &&
@@ -56,53 +55,24 @@ python manage.py runserver
 * Email (optional), 
 * And Password.
 
-2) Change location to project folder using command:
-```
-
-```
-
-3) Create virtual environment using command:
-```
-
-```
-
-4) Activate virtual environment by using command (Unix or MacOS):
-```
-
-```
 
 or (Windows):
 ```
-source env_rest\Scripts\activate
-```
-
-
-5) Install all packages from requirements.txt:
-
-```
-
-
-```
-6) Create superuser:
-
-```
+git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git &&
+cd Django-Rest-Project &&
+python -m venv env_rest &&
+source env_rest\Scripts\activate &&
+pip install -r requirements.txt &&
 python manage.py makemigrations &&
 python manage.py migrate &&
 python manage.py createsuperuser &&
 python manage.py runserver
-
 ```
 
 * Enter your Username,
 * Email (optional), 
 * And Password.
 
-6) Run server:
-
-```
-python manage.py runserver
-
-```
 
 ## LOGIN:
 ### If you using browser go directly to: http://0.0.0.0:8000/
