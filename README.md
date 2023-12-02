@@ -77,12 +77,12 @@ python manage.py runserver
 
 
 ## LOGIN:
-### If you using browser go directly to: http://0.0.0.0:8000/
+### If you using browser go directly to: http://localhost:8000/
 * Login as a superuser you created
 * Create some accounts (admin panel)
 * You can change membership for each user in "Profiles" (admin panel) default membership = BASIC.
 * Upload some images.
-* See result on: (http://0.0.0.0:8000/   +   small_image_link), or just (CTRL + right mouse button on link in postman)
+* See result on: (http://localhost:8000/   +   small_image_link), or just (CTRL + right mouse button on link in postman)
 
 ### If you use postman go to: http://0.0.0.0:8000/api-auth/login/
 * send GET request to recive token
