@@ -40,23 +40,35 @@ To run project:
 1) Clone this repository
 
 ```
-git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git
+git clone https://github.com/BigBadWolfPL/Django-Rest-Project.git &&
+cd Django-Rest-Project &&
+python -m venv env_rest &&
+source env_rest/bin/activate &&
+pip install -r requirements.txt &&
+python manage.py makemigrations &&
+python manage.py migrate &&
+python manage.py createsuperuser &&
+python manage.py runserver
 
 ```
+
+* Enter your Username,
+* Email (optional), 
+* And Password.
 
 2) Change location to project folder using command:
 ```
-cd Django-Rest-Project
+
 ```
 
 3) Create virtual environment using command:
 ```
-python -m venv env_rest
+
 ```
 
 4) Activate virtual environment by using command (Unix or MacOS):
 ```
-source env_rest/bin/activate
+
 ```
 
 or (Windows):
@@ -68,7 +80,7 @@ source env_rest\Scripts\activate
 5) Install all packages from requirements.txt:
 
 ```
-pip install -r requirements.txt 
+
 
 ```
 6) Create superuser:
